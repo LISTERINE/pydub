@@ -366,6 +366,10 @@ class AudioSegment(object):
         return cls.from_file(file, 'wav')
 
     @classmethod
+    def from_aiff(cls, file):
+        return cls.from_file(file, 'aiff')
+
+    @classmethod
     def _from_safe_wav(cls, file):
         file = _fd_or_path_or_tempfile(file, 'rb', tempfile=False)
         file.seek(0)
@@ -421,6 +425,7 @@ class AudioSegment(object):
 
         # for wav files, we're done (wav data is written directly to out_f)
         if format == 'wav':
+            out_f.close()
             return out_f
 
         output = NamedTemporaryFile(mode="w+b", delete=False)
