@@ -3,7 +3,7 @@ from __future__ import division
 from math import log, ceil, floor
 import os
 import re
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STARTF_USESHOWWINDOW, STARTUPINFO
 import sys
 from tempfile import TemporaryFile
 from warnings import warn
@@ -182,3 +182,10 @@ def mediainfo(filepath):
                 info[key] = value
 
     return info
+
+def get_startup_info():
+    startup_info = None
+    if os.name == 'nt':
+        startup_info = STARTUPINFO()
+        startup_info.dwFlags |= STARTF_USESHOWWINDOW
+    return startup_info
